@@ -3,11 +3,33 @@
 import React from "react";
 import Logo from "../../img/logo.png";
 import Avatar from "../../img/avatar.png";
-import { MdShoppingCart } from "react-icons/md";
+import { MdShoppingCart, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from "../../firebase.config";
+import { useStateValue } from "../../context/stateProvider";
+import { actionType } from "../../context/reducer";
 
 const Header = () => {
+	const firebaseAuth = getAuth(app);
+	const provider = new GoogleAuthProvider();
+	const [{ user }, dispatch] = useStateValue();
+
+	const login = async () => {
+		if (!user) {
+			const {
+				user: { refreshToken, providerData },
+			} = await signInWithPopup(firebaseAuth, provider);
+
+			dispatch({
+				type: actionType.SET_USER,
+				user: providerData[0],
+			});
+			localStorage.setItem("user", JSON.stringify(providerData[0]));
+		}
+	};
+
 	return (
 		<header className="w-screen z-50 fixed  p-6 px-16">
 			{/* desktop and tablets */}
@@ -48,14 +70,25 @@ const Header = () => {
 						</div>
 					</div>
 
-					<div>
+					<div className="relative">
 						<motion.img
 							whileTap={{ scale: 0.6 }}
-							src={Avatar}
-							className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer"
+							onClick={login}
+							src={user ? user.photoURL : Avatar}
+							className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
 							alt=""
 							srcset=""
 						/>
+						<div className="w-40 bg-grey-50  shadow-xl rounded-lg absolute top-12 right-0 flex flex-col">
+							<p className="px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base">
+								New Item
+								<MdAdd />{" "}
+							</p>
+							<p className="px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base">
+								Logout
+								<MdLogout />
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

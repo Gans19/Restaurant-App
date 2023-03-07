@@ -3,7 +3,8 @@
 import React from "react";
 import Delivery from "../../img/delivery.png";
 import Bg from "../../img/heroBg.png";
-import I1 from "../../img/r2.png";
+// import I1 from "../../img/r2.png";
+import { heroData } from "../../utils/data";
 
 const HomeContainer = () => {
 	return (
@@ -51,19 +52,29 @@ const HomeContainer = () => {
 					alt=""
 				/>
 
-				<div className="w-full h-full absolute top-0 left-0 px-32 py-4 flex items-center justify-center">
-					<div className="w-190 p-4 bg-cardOverlay backdrop-blur-md rounded-3xl flex flex-col">
-						<img src={I1} className="w-40 -mt-20 " alt="" />
-						<p className="text-xl font-semibold text-textColor mt-4">
-							Biriyani
-						</p>
-						<p className="text-sm text-lighttextGray font-semibold my-3">
-							Chicken & Mutton
-						</p>
-						<p className="text-sm font-semibold text-headingColor">
-							Rs. <span className="text-xs text-red-500">₹</span>180
-						</p>
-					</div>
+				<div className="w-full h-full absolute top-0 left-0 lg:px-32 py-4 flex items-center justify-center gap-4  flex-wrap">
+					{heroData &&
+						heroData.map((n) => (
+							<div
+								key={n.id}
+								className=" md: lg:w-190  p-4 bg-cardOverlay drop-shadow-xl backdrop-blur-md rounded-3xl flex flex-col">
+								<img
+									src={n.imgSrc}
+									className="w-20 lg:w-40 -mt-10 lg:-mt-20 "
+									alt=""
+								/>
+								<p className="text-base lg:text-xl font-semibold text-textColor mt-2 lg:mt-4">
+									{n.name}
+								</p>
+								<p className=" text-[12px] lg:text-sm text-lighttextGray font-semibold my-1 lg:my-3">
+									{n.desc}
+								</p>
+								<p className="text-sm font-semibold text-headingColor">
+									Rs. <span className="text-xs text-red-500">₹</span>
+									{n.price}
+								</p>
+							</div>
+						))}
 				</div>
 			</div>
 		</section>

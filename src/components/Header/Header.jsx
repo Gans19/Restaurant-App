@@ -49,7 +49,7 @@ const Header = () => {
 	};
 
 	return (
-		<header className="w-screen z-50 fixed p-3 px-4  md:p-6 md:px-16">
+		<header className="w-screen z-50 fixed p-3 px-4  md:p-6 md:px-16 bg-primary">
 			{/* desktop and tablets */}
 			<div className="hidden md:flex w-full p-4 justify-between items-center">
 				<Link to={"/"} className="flex items-center gap-2">
@@ -158,7 +158,9 @@ const Header = () => {
 							className="w-40 bg-grey-50  shadow-xl rounded-lg  absolute top-12 right-0 flex flex-col">
 							{user && user.email === "ganscivil.2208@gmail.com" && (
 								<Link to={"/createItem"}>
-									<p className=" bg-white  px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base">
+									<p
+										className=" bg-white  px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base"
+										onClick={() => setisMenu(false)}>
 										New Item
 										<MdAdd />
 									</p>
@@ -168,21 +170,25 @@ const Header = () => {
 							<ul className="flex flex-col  bg-white  ">
 								<li
 									whileTap={{ scale: 0.6 }}
+									onClick={() => setisMenu(false)}
 									className="px-5 py-2 hover:bg-slate-200 text-base text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
 									Home
 								</li>
 								<li
 									whileTap={{ scale: 0.6 }}
+									onClick={() => setisMenu(false)}
 									className="px-5 py-2 hover:bg-slate-200 text-base text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
 									About Us
 								</li>
 								<li
 									whileTap={{ scale: 0.6 }}
+									onClick={() => setisMenu(false)}
 									className="px-5 py-2 hover:bg-slate-200 text-base text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
 									Menu
 								</li>
 								<li
 									whileTap={{ scale: 0.6 }}
+									onClick={() => setisMenu(false)}
 									className="px-5 py-2 hover:bg-slate-200 text-base text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
 									Service
 								</li>

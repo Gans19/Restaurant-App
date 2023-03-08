@@ -109,7 +109,9 @@ const Header = () => {
 								className="w-40 bg-grey-50  shadow-xl rounded-lg absolute top-12 right-0 flex flex-col">
 								{user && user.email === "ganscivil.2208@gmail.com" && (
 									<Link to={"/createItem"}>
-										<p className="px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base">
+										<p
+											onClick={() => setisMenu(false)}
+											className="px-5 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100  ease-in-out text-textColor text-base">
 											New Item
 											<MdAdd />
 										</p>

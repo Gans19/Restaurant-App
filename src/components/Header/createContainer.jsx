@@ -7,9 +7,18 @@ import {
 	MdCloudUpload,
 	MdDelete,
 	MdFoodBank,
+	MdAttachMoney,
 } from "react-icons/md";
 import { categories } from "../../utils/data";
 import Loader from "../Loader";
+import { storage } from "../../firebase.config";
+import {
+	getDownloadURL,
+	uploadBytesResumable,
+	ref,
+	deleteObject,
+} from "firebase/storage";
+import { saveItem } from "../../utils/firebaseFunction";
 
 const CreateContainer = () => {
 	const [title, setTitle] = useState("");
@@ -22,10 +31,123 @@ const CreateContainer = () => {
 	const [msg, setMsg] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const uploadImg = () => {};
+	const uploadImg = (e) => {
+		setIsLoading(true);
+		const imageFile = e.target.files[0];
+		const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`);
+		const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+		uploadTask.on(
+			"state_changed",
+			(snapshot) => {
+				const uploadProgress =
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			},
+			(error) => {
+				console.log(error);
+				setFields(true);
+				setMsg("Error while uploading : Try AGain 🙇");
+				setAlertStatus("danger");
+				setTimeout(() => {
+					setFields(false);
+					setIsLoading(false);
+				}, 4000);
+			},
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+					setImageAsset(downloadURL);
+					setIsLoading(false);
+					setFields(true);
+					setMsg("Image uploaded successfully 😊");
+					setAlertStatus("success");
+					setTimeout(() => {
+						setFields(false);
+					}, 4000);
+				});
+			}
+		);
+	};
+
+	const deleteImage = () => {
+		setIsLoading(true);
+		const deleteRef = ref(storage, imageAsset);
+		deleteObject(deleteRef).then(() => {
+			setImageAsset(null);
+			setIsLoading(false);
+			setFields(true);
+			setMsg("Image deleted successfully 😊");
+			setAlertStatus("success");
+			setTimeout(() => {
+				setFields(false);
+			}, 4000);
+		});
+	};
 
 	const deleteImg = () => {
-		return;
+		setIsLoading(true);
+		const deleteRef = ref(storage, imageAsset);
+		deleteObject(deleteRef).then(() => {
+			setImageAsset(null);
+			setIsLoading(false);
+			setFields(true);
+			setMsg("Image deleted successfully");
+			setAlertStatus("success");
+			setTimeout(() => {
+				setFields(false);
+			}, 4000);
+		});
+	};
+
+	const saveDetails = () => {
+		setIsLoading(true);
+		try {
+			if (!title || !calories || !imageAsset || !price || !category) {
+				setFields(true);
+				setMsg("Required Fields Not An Empty : Try AGain 🙇");
+				setAlertStatus("danger");
+				setTimeout(() => {
+					setFields(false);
+					setIsLoading(false);
+				}, 4000);
+			} else {
+				const data = {
+					id: `${Date.now}`,
+					title: title,
+					category: category,
+					imageUrl: imageAsset,
+					price: price,
+					calories: calories,
+					qty: 1,
+				};
+				saveItem(data);
+
+				setIsLoading(false);
+				setFields(true);
+				setMsg("Data Uploaded successfully");
+				setAlertStatus("success");
+				setTimeout(() => {
+					setFields(false);
+				}, 4000);
+			}
+		} catch (error) {
+			console.log(error);
+			setFields(true);
+			setMsg("Error while uploading : Try AGain 🙇");
+			setAlertStatus("danger");
+			clearData();
+			setTimeout(() => {
+				setFields(false);
+				setIsLoading(false);
+			}, 4000);
+		}
+	};
+
+	const clearData = () => {
+		setTitle("");
+		setImageAsset(null);
+		setPrice("");
+		setCategory("Select Category");
+		setCalories("");
 	};
 
 	return (
@@ -126,10 +248,33 @@ const CreateContainer = () => {
 						<input
 							type="text"
 							required
+							value={calories}
+							onChange={(e) => setCalories(e.target.value)}
 							placeholder="Calories"
 							className="w-full h-full bg-transparent text-lg outline-none border-none placeholder:text-gray-400 text-textColor"
 						/>
 					</div>
+
+					<div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
+						<MdAttachMoney className="text-gray-700 text-2xl" />
+						<input
+							type="text"
+							required
+							value={price}
+							onChange={(e) => setPrice(e.target.value)}
+							placeholder="Price"
+							className="w-full h-full bg-transparent text-lg outline-none border-none placeholder:text-gray-400 text-textColor"
+						/>
+					</div>
+				</div>
+
+				<div className="flex items-center w-full">
+					<button
+						type="button"
+						className="ml-0 md:ml-auto w-full md:w-auto border-none outline-none rounded-lg bg-emerald-500 px-12 py-2 text-white text-lg font-semibold"
+						onClick={saveDetails}>
+						Save
+					</button>
 				</div>
 			</div>
 		</div>

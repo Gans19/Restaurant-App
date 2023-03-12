@@ -1,9 +1,10 @@
 /** @format */
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { MdShoppingBasket } from "react-icons/md";
 import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
+import { data } from "../utils/firebaseFunction";
 
 const RowContainer = ({ flag, data }) => {
 	console.log(data);
@@ -24,7 +25,7 @@ const RowContainer = ({ flag, data }) => {
 								className="w-40 h-40 -mt-8 drop-shadow-2xl"
 								whileHover={{ scale: 1.2 }}>
 								<img
-									src={item?.imageURL}
+									src="https://firebasestorage.googleapis.com/v0/b/restaurantapp-40881.appspot.com/o/Images%2F1678612652697-f10.png?alt=media&token=6b243861-3f83-4d6f-8571-7b2a240ca176"
 									alt=" "
 									className="w-full h-full object-contain"
 								/>

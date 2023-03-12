@@ -19,6 +19,9 @@ import {
 	deleteObject,
 } from "firebase/storage";
 import { saveItem } from "../../utils/firebaseFunction";
+import { useStateValue } from "../../context/stateProvider";
+import { getAllFoodItem } from "../../utils/firebaseFunction";
+import { actionType } from "../../context/reducer";
 
 const CreateContainer = () => {
 	const [title, setTitle] = useState("");
@@ -30,6 +33,7 @@ const CreateContainer = () => {
 	const [alertStatus, setAlertStatus] = useState("danger");
 	const [msg, setMsg] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const [{ foodItems }, dispatch] = useStateValue();
 
 	const uploadImg = (e) => {
 		setIsLoading(true);
@@ -111,7 +115,7 @@ const CreateContainer = () => {
 				}, 4000);
 			} else {
 				const data = {
-					id: `${Date.now}`,
+					id: `${Date.now()}`,
 					title: title,
 					category: category,
 					imageUrl: imageAsset,
@@ -128,18 +132,21 @@ const CreateContainer = () => {
 				setTimeout(() => {
 					setFields(false);
 				}, 4000);
+				clearData();
 			}
 		} catch (error) {
 			console.log(error);
 			setFields(true);
 			setMsg("Error while uploading : Try AGain 🙇");
 			setAlertStatus("danger");
-			clearData();
+
 			setTimeout(() => {
 				setFields(false);
 				setIsLoading(false);
 			}, 4000);
 		}
+
+		fetchData();
 	};
 
 	const clearData = () => {
@@ -150,6 +157,16 @@ const CreateContainer = () => {
 		setCalories("");
 	};
 
+	const fetchData = async () => {
+		await getAllFoodItem().them((data) => {
+			dispatch({
+				type: actionType.SET_FOOD_ITEM,
+				foodItems: data,
+			});
+		});
+	};
+
+	console.log(foodItems);
 	return (
 		<div className="w-full min-h-screen flex items-center justify-center ">
 			<div className="w-[90%] md:w-[75%] border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center gap-4">

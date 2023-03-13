@@ -19,7 +19,7 @@ const App = () => {
 	const fetchData = async () => {
 		await getAllFoodItem().then((data) => {
 			dispatch({
-				type: actionType.SET_FOOD_ITEMS,
+				type: actionType.SET_FOOD_ITEM,
 				foodItems: data,
 			});
 		});

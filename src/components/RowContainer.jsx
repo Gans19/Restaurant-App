@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { MdShoppingBasket } from "react-icons/md";
+import { MdShoppingCart } from "react-icons/md";
 import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
 import { data } from "../utils/firebaseFunction";
@@ -25,7 +25,7 @@ const RowContainer = ({ flag, data }) => {
 								className="w-40 h-40 -mt-8 drop-shadow-2xl"
 								whileHover={{ scale: 1.2 }}>
 								<img
-									src="https://firebasestorage.googleapis.com/v0/b/restaurantapp-40881.appspot.com/o/Images%2F1678612652697-f10.png?alt=media&token=6b243861-3f83-4d6f-8571-7b2a240ca176"
+									src={item?.imageUrl}
 									alt=" "
 									className="w-full h-full object-contain"
 								/>
@@ -33,7 +33,7 @@ const RowContainer = ({ flag, data }) => {
 							<motion.div
 								whileTap={{ scale: 0.75 }}
 								className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8">
-								<MdShoppingBasket className="text-white" />
+								<MdShoppingCart className="text-white" />
 							</motion.div>
 						</div>
 

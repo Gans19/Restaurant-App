@@ -11,7 +11,7 @@ const HomeContainer = () => {
 		<section
 			className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full h-screen"
 			id="home">
-			<div className="flex-1 py-2 flex flex-col items-start justify-start md:items-center gap-6">
+			<div className="flex-1 py-8 flex flex-col items-start justify-start md:items-center gap-6">
 				<div className="flex items-center justify-center gap-2 bg-orange-100 px-4 py-2 rounded-full">
 					<p className="text-base text-orange-500 font-semibold">
 						Bike Delivery

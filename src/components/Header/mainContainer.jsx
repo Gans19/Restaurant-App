@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useRef } from "react";
 import HomeContainer from "./HomeContainer";
 import { motion } from "framer-motion";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -9,6 +9,9 @@ import { useStateValue } from "../../context/stateProvider";
 
 const MainContainer = () => {
 	const [{ foodItems }, dispatch] = useStateValue();
+
+	const rowContainer = useRef();
+	const scroll = (scrollOffset += scroll);
 
 	return (
 		<div className="flex h-auto flex-col items-center w-full justify-center">
@@ -35,6 +38,7 @@ const MainContainer = () => {
 				</div>
 
 				<RowContainer
+					ref={rowContainer}
 					flag={true}
 					data={foodItems?.filter((n) => n.category === "rice")}
 				/>

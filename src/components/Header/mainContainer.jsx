@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import HomeContainer from "./HomeContainer";
 import { motion } from "framer-motion";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -11,7 +11,7 @@ const MainContainer = () => {
 	const [{ foodItems }, dispatch] = useStateValue();
 
 	const rowContainer = useRef();
-	const scroll = (scrollOffset += scroll);
+	const [scrollValue, setScrollValue] = useState(0);
 
 	return (
 		<div className="flex h-auto flex-col items-center w-full justify-center">
@@ -26,11 +26,13 @@ const MainContainer = () => {
 					<div className="gap-3 items-center hidden md:flex">
 						<motion.div
 							whileTap={{ scale: 0.75 }}
+							onClick={() => setScrollValue(-200)}
 							className="w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500 cursor-pointer transition-all duration-100 ease-in-out hover:shadow-lg items-center justify-center flex">
 							<MdChevronLeft className="text-lg text-white" />
 						</motion.div>
 						<motion.div
 							whileTap={{ scale: 0.75 }}
+							onClick={() => setScrollValue(200)}
 							className="w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500 cursor-pointer transition-all duration-100 ease-in-out hover:shadow-lg items-center justify-center flex">
 							<MdChevronRight className="text-lg text-white" />
 						</motion.div>

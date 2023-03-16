@@ -1,15 +1,21 @@
 /** @format */
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { MdShoppingCart } from "react-icons/md";
 import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
 import { data } from "../utils/firebaseFunction";
 
-const RowContainer = ({ flag, data }) => {
+const RowContainer = ({ flag, data, scrollValue }) => {
+	const rowContainer = useRef();
+	useEffect(() => {
+		rowContainer.current.scrollLeft += scrollValue;
+	}, [scrollValue]);
+
 	console.log(data);
 	return (
 		<div
+			ref={rowContainer}
 			className={`w-full flex items-center gap-3 scrollbar-none  my-12 scroll-smooth  ${
 				flag
 					? "overflow-x-scroll scrollbar-none "
@@ -46,7 +52,7 @@ const RowContainer = ({ flag, data }) => {
 							</p>
 							<div className="flex items-center gap-8">
 								<p className="text-lg text-headingColor font-semibold">
-									<span className="text-sm text-red-500">$</span> {item?.price}
+									<span className="text-sm text-red-500">₹</span> {item?.price}
 								</p>
 							</div>
 						</div>

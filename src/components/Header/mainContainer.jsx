@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import RowContainer from "../RowContainer";
 import { useStateValue } from "../../context/stateProvider";
+import MenuContainer from "../MenuContainer";
 
 const MainContainer = () => {
 	const [{ foodItems }, dispatch] = useStateValue();
+	const [scrollValue, setScrollValue] = useState(0);
 
 	const rowContainer = useRef();
-	const [scrollValue, setScrollValue] = useState(0);
+	useEffect(() => {}, [scrollValue]);
 
 	return (
 		<div className="flex h-auto flex-col items-center w-full justify-center">
@@ -20,7 +22,7 @@ const MainContainer = () => {
 			<section className="w-full my-6 ">
 				<div className="w-full flex items-center justify-between ">
 					<p className="text-2xl font-semibold capitalize relative text-headingColor before:absolute before:rounded-lg before:content before:w-32 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all ease-in-out duration-100">
-						Our Fresh And Healthy Foods
+						Our Hot Dishes
 					</p>
 
 					<div className="gap-3 items-center hidden md:flex">
@@ -40,11 +42,13 @@ const MainContainer = () => {
 				</div>
 
 				<RowContainer
-					ref={rowContainer}
+					scrollValue={scrollValue}
 					flag={true}
 					data={foodItems?.filter((n) => n.category === "rice")}
 				/>
 			</section>
+
+			<MenuContainer />
 		</div>
 	);
 };

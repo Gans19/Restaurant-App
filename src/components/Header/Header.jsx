@@ -3,6 +3,7 @@
 import React from "react";
 import Logo from "../../img/logo.png";
 import Avatar from "../../img/avatar.png";
+import { scrollSpy, smooth, activeClass } from "react-scroll";
 
 import { MdShoppingCart, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
@@ -76,7 +77,9 @@ const Header = () => {
 						<motion.li
 							whileTap={{ scale: 0.6 }}
 							className="text-base text-headingColor duration-100 transition-all ease-in-out cursor-pointer">
-							Menu
+							<Link to="menu" activeClass="active" smooth spy>
+								Menu
+							</Link>
 						</motion.li>
 						<motion.li
 							whileTap={{ scale: 0.6 }}

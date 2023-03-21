@@ -3,22 +3,28 @@
 import React, { useEffect, useState } from "react";
 import { IoFastFood } from "react-icons/io5";
 import { categories } from "../utils/data";
+import { motion } from "framer-motion";
+import RowContainer from "./RowContainer";
+import { useStateValue } from "../context/stateProvider";
 
 const MenuContainer = () => {
 	const [filter, setFilter] = useState("chicken");
 	useEffect(() => {}, [filter]);
 
+	const [{ foodItems }, dispatch] = useStateValue();
+
 	return (
 		<section className="w-full my-6 " id="menu">
 			<div className=" w-full flex flex-col items-center justify-center">
-				<p className="mr-auto text-2xl font-semibold capitalize relative text-headingColor before:absolute before:rounded-lg before:content before:w-32 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all ease-in-out duration-100">
+				<p className="mr-auto text-2xl font-semibold capitalize relative text-headingColor before:absolute before:rounded-lg before:content before:w-32 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 ">
 					Our Fresh And Healthy Foods
 				</p>
 
 				<div className="my-6 w-full flex items-center justify-start lg:justify-center gap-8 overflow-x-scroll scrollbar-none">
 					{categories &&
 						categories.map((category) => (
-							<div
+							<motion.div
+								whileTap={{ scale: 0.75 }}
 								onClick={() => setFilter(category.urlParamName)}
 								key={category.id}
 								className={`group ${
@@ -46,8 +52,15 @@ const MenuContainer = () => {
 									}  group-hover:text-white`}>
 									{category.name}
 								</p>
-							</div>
+							</motion.div>
 						))}
+				</div>
+
+				<div className="w-full">
+					<RowContainer
+						flag={false}
+						data={foodItems?.filter((n) => n.category === filter)}
+					/>
 				</div>
 			</div>
 		</section>

@@ -1,7 +1,4 @@
-/**
- * @format
- * @type {import('tailwindcss').Config}
- */
+/** @format */
 
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -59,10 +56,8 @@ module.exports = {
 				cartBg: "#282a2c",
 				cartItem: "#2e3033",
 				cartTotal: "#343739",
-				rowBg: "rgba(255,131,0,0,0.05)",
 			},
 		},
 	},
+	plugins: [require("tailwind-scrollbar")],
 };
-
-plugins: [require("tailwind-scrollbar")];

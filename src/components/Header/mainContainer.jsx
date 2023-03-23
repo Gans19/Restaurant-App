@@ -10,11 +10,11 @@ import MenuContainer from "../MenuContainer";
 import CartContainer from "../CartContainer";
 
 const MainContainer = () => {
-	const [{ foodItems }, dispatch] = useStateValue();
+	const [{ foodItems, cartShow }, dispatch] = useStateValue();
 	const [scrollValue, setScrollValue] = useState(0);
 
 	const rowContainer = useRef();
-	useEffect(() => {}, [scrollValue]);
+	useEffect(() => {}, [scrollValue, cartShow]);
 
 	return (
 		<div className="flex h-auto flex-col items-center w-full justify-center">
@@ -50,7 +50,7 @@ const MainContainer = () => {
 			</section>
 
 			<MenuContainer />
-			<CartContainer />
+			{cartShow && <CartContainer />}
 		</div>
 	);
 };

@@ -5,6 +5,7 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { useStateValue } from "../context/stateProvider";
 import { actionType } from "../context/reducer";
+import { fetchCart } from "../../src/utils/fetchLocalStorageData";
 let items = [];
 
 const CartItem = ({ item, setFlag, flag }) => {
@@ -14,7 +15,7 @@ const CartItem = ({ item, setFlag, flag }) => {
 	const cartDispatch = () => {
 		localStorage.setItem("cartItems", JSON.stringify(items));
 		dispatch({
-			type: actionType.SET_CART,
+			type: actionType.SET_CARTITEMS,
 			cartItems: items,
 		});
 	};
